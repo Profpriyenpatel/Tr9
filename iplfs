@@ -1,0 +1,54 @@
+const fs = require("fs");
+
+try {
+    // Initial players
+    let players = [
+        { name: "Rohit", runs: 52 },
+        { name: "Kohli", runs: 96 },
+        { name: "Gayle", runs: 20 },
+        { name: "Rahul", runs: 33 },
+        { name: "Tilak", runs: 30 }
+    ];
+
+    // Write initial data
+    fs.writeFileSync("score.txt", JSON.stringify(players));
+
+    // Read file
+    let data = fs.readFileSync("score.txt", "utf-8");
+    let filePlayers = JSON.parse(data);
+
+    // Add 6th player
+    filePlayers.push({ name: "Hardik", runs: 52 });
+
+    // Calculate total runs
+    let totalRuns = 0;
+    filePlayers.forEach(p => totalRuns += p.runs);
+
+    // ✅ T20 Run Rate (20 overs)
+    let runRate = totalRuns / 20;
+
+    // Players above 50
+    let topPlayers = filePlayers.filter(p => p.runs > 50);
+topPlayers.sort((a, b) => b.runs - a.runs)
+    // Final result
+    let result = {
+        players: filePlayers,
+        totalRuns: totalRuns,
+        runRate_T20: runRate,
+        above50: topPlayers
+    };
+
+    // Write file
+    fs.writeFileSync("score.txt", JSON.stringify(result, null, 2));
+
+    // Append top performers
+    fs.appendFileSync(
+        "score.txt",
+        "\n\nTop Performers:\n" + JSON.stringify(topPlayers, null, 2)
+    );
+
+    console.log("T20 score updated!");
+
+} catch (err) {
+    console.log("Error:", err.message);
+} 
