@@ -1,0 +1,29 @@
+const http = require('http');
+const quantity = 100;
+const buyPrice = 50;
+const sellPrice = 60;
+const investment = quantity * buyPrice;
+const returnAmount = quantity * sellPrice;
+const result = returnAmount - investment;
+const server = http.createServer((req, res) => {
+res.writeHead(200, { 'Content-Type': 'text/html' });
+
+
+let message = '';
+let color = '';
+if (result > 0) {
+message = `You made a profit of Rs.${result}`;
+color = 'green';
+} else if (result < 0) {
+message = `You incurred a loss of Rs.${Math.abs(result)}`;
+color = 'red';
+} else {
+message = 'No profit, no loss.';
+color = 'black';
+}
+res.write(`<h1 style="color: ${color};">${message}</h1>`);
+res.end();
+});
+server.listen(3000, () => {
+console.log('Server is running at http://localhost:3000');
+});
