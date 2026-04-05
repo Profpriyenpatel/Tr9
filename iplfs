@@ -1,6 +1,4 @@
 const fs = require("fs");
-
-try {
     // Initial players
     let players = [
         { name: "Rohit", runs: 52 },
@@ -48,7 +46,3 @@ topPlayers.sort((a, b) => b.runs - a.runs)
     );
 
     console.log("T20 score updated!");
-
-} catch (err) {
-    console.log("Error:", err.message);
-} 
