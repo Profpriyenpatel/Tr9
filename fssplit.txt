@@ -1,0 +1,50 @@
+const fs = require('fs');
+
+
+const folderName = 'tempReports';
+const fileName = folderName + '/daily.txt';
+
+
+// Create folder
+fs.mkdir(folderName, { recursive: true }, (err) => {
+  if (err) return console.log('Folder creation failed:', err);
+
+
+  const initialText = 'Report Start\n------------\n';
+
+
+  // Write file
+  fs.writeFile(fileName, initialText, (err) => {
+    if (err) return console.log('Write failed:', err);
+
+
+    const logs = 'Entry 1: Success\nEntry 2: Warning\nEntry 3: Success\n';
+    // Append logs
+    fs.appendFile(fileName, logs, (err) => {
+      if (err) return console.log('Append failed:', err);
+      // Read file
+      fs.readFile(fileName, 'utf-8', (err, data) => {
+        if (err) return console.log('Read failed:', err);
+        const count = data.split('Success').length - 1;
+        console.log('Success Count:', count);
+        if (count >= 3) {
+          // Delete file
+          fs.unlink(fileName, (err) => {
+            if (err) return console.log('File deletion failed:', err);
+
+
+            // Delete folder
+            fs.rm(folderName, { recursive: true }, (err) => {
+              if (err) return console.log('Folder deletion failed:', err);
+              console.log('File and folder deleted.');
+            });
+          });
+        } else {
+          console.log('Condition not met. Nothing deleted.');
+        }
+
+
+      });
+    });
+  });
+});
