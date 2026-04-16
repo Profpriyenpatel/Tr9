@@ -1,0 +1,41 @@
+In 3.js file in src folder
+
+var expr = require("express");
+var app = expr();
+app.use(expr.urlencoded()); 
+app.use(expr.static(‘../public’,{index: ' ljform.html'}));
+app.post("/login",(req,res)=>{
+    if( req.body.uname == 'admin' ){ 
+        res.write(`<h1 style="color:green">Hey ${req.body.uname},Welcome!</h1><br>`) 
+    }
+    else{ 
+        res.write(`<h1 style="color:red">Please login with Admin name</h1>`);
+    }     
+    res.send(); 
+})
+app.listen(5222);
+
+
+In 1.css file in public folder
+
+.click{
+    background-color: black;
+   color: white
+}
+
+In ljform.html file in public folder
+
+<html>
+    <head>
+        <link rel="stylesheet" href="1.css">
+    </head>
+    <body>
+        <form method="post" action="/login">
+            <label>User name:</label>
+            <input type = "text" name="uname" ></input>
+            <label>Password:</label>
+            <input type = "text" name="password" ></input>
+        <button name="Submit" value="Submit" class="click">Submit</button>
+    </form>
+    </body>
+</html>
