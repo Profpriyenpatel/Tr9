@@ -33,6 +33,9 @@ app.post('/order', (req, res) => {
 
 // Summary
 app.get('/summary', (req, res) => {
+       if (!req.session.username) {
+        return res.redirect('/index.html');
+    }
     res.send(`
         <h2>Summary</h2>
         Username: ${req.session.username} <br>
