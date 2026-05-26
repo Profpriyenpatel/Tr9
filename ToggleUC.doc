@@ -1,0 +1,36 @@
+Main.js (Defines Context, provides it)
+
+import React, { useState, createContext } from "react";
+import Ur1 from "./Ur1";
+// Define context inside Main.js
+export const ThemeContext = createContext();
+
+function Main() {
+  const [darkMode, setDarkMode] = useState(false);
+  const toggleTheme = () => setDarkMode((prev) => !prev);
+  const value = {darkMode, toggleTheme};
+  return (
+    <ThemeContext.Provider value={value}>
+      <Ur1 />
+    </ThemeContext.Provider>
+  )}
+export default Main;
+
+
+✅ Ur1.js (Consumes Context)
+import React, { useContext } from "react";
+import { ThemeContext } from "./Main"; // Import context from Main.js
+
+function Ur1() {
+  const { darkMode, toggleTheme } = useContext(ThemeContext);
+  const style = {
+    backgroundColor: darkMode ? "#222" : "#eee",
+    color: darkMode ? "#fff" : "#000",
+    height: "100vh",    display: "flex",    justifyContent: "center",    alignItems: "center",    flexDirection: "column"
+  };
+  return (
+    <div style={style}>
+      <h2>{darkMode ? "Dark Mode" : "Light Mode"}</h2>
+      <button onClick={toggleTheme}>Toggle Theme</button>
+    </div> );}
+export default Ur1;
