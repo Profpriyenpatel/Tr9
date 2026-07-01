@@ -1,0 +1,358 @@
+//=====================================================
+// SECTION A : CRUD OPERATIONS
+//=====================================================
+
+//1. Insert a new football player
+db.football.insertOne({
+    name: "Erling Haaland",
+    country: "Norway",
+    club: "Manchester City",
+    goal2022: 27,
+    goal2023: 36,
+    goal2024: 30,
+    goal2025: 18,
+    totalGoal: 111
+});
+
+//2. Display all player records
+db.football.find();
+
+//3. Find the player whose name is Lionel Messi
+db.football.find({ name: "Lionel Messi" });
+
+//4. Display all players from England
+db.football.find({ country: "England" });
+
+//5. Display players whose totalGoal is greater than 80
+db.football.find({ totalGoal: { $gt: 80 } });
+
+//6. Update the club of Harry Kane to Manchester United
+db.football.updateOne(
+    { name: "Harry Kane" },
+    { $set: { club: "Manchester United" } }
+);
+
+//7. Increase the goal2025 of Kylian Mbappe by 5
+db.football.updateOne(
+    { name: "Kylian Mbappe" },
+    { $inc: { goal2025: 5 } }
+);
+
+//8. Remove the state field of Neymar Jr
+db.football.updateOne(
+    { name: "Neymar Jr" },
+    { $unset: { state: "" } }
+);
+
+//9. Rename totalGoal to careerGoal
+db.football.updateMany(
+    {},
+    { $rename: { totalGoal: "careerGoal" } }
+);
+
+//10. Delete all players whose country is Portugal
+db.football.deleteMany({ country: "Portugal" });
+
+
+
+//=====================================================
+// SECTION B : UPDATE OPERATORS
+//=====================================================
+
+//1. Multiply goal2024 of Mohamed Salah by 2
+db.football.updateOne(
+    { name: "Mohamed Salah" },
+    { $mul: { goal2024: 2 } }
+);
+
+//2. Set the country of Joao Felix to Spain
+db.football.updateOne(
+    { name: "Joao Felix" },
+    { $set: { country: "Spain" } }
+);
+
+//3. Increase goal2023 by 10 for all players from Brazil
+db.football.updateMany(
+    { country: "Brazil" },
+    { $inc: { goal2023: 10 } }
+);
+
+//4. Remove the club field from Pedri
+db.football.updateOne(
+    { name: "Pedri" },
+    { $unset: { club: "" } }
+);
+
+//5. Rename goal2025 to currentYearGoal
+db.football.updateMany(
+    {},
+    { $rename: { goal2025: "currentYearGoal" } }
+);
+
+//6. Replace the complete document of Luka Modric
+db.football.replaceOne(
+    { name: "Luka Modric" },
+    {
+        name: "Luka Modric",
+        country: "Croatia",
+        club: "Real Madrid",
+        goal2022: 8,
+        goal2023: 9,
+        goal2024: 7,
+        goal2025: 5,
+        totalGoal: 29
+    }
+);
+
+//7. Update multiple players from England and set club as England FC
+db.football.updateMany(
+    { country: "England" },
+    { $set: { club: "England FC" } }
+);
+
+//8. Increase goal2022 by 2 for every player
+db.football.updateMany(
+    {},
+    { $inc: { goal2022: 2 } }
+);
+
+//9. Decrease goal2025 by 3 for Cristiano Ronaldo
+db.football.updateOne(
+    { name: "Cristiano Ronaldo" },
+    { $inc: { goal2025: -3 } }
+);
+
+//10. Delete one player named Gavi
+db.football.deleteOne({ name: "Gavi" });
+
+
+
+//=====================================================
+// SECTION C : QUERY OPERATORS
+//=====================================================
+
+//1. Display players whose goal2024 is greater than 20
+db.football.find({ goal2024: { $gt: 20 } });
+
+//2. Display players whose goal2023 is less than 10
+db.football.find({ goal2023: { $lt: 10 } });
+
+//3. Find players whose country is either Brazil or Spain
+db.football.find({
+    country: { $in: ["Brazil", "Spain"] }
+});
+
+//4. Find players whose totalGoal is between 60 and 100
+db.football.find({
+    totalGoal: {
+        $gte: 60,
+        $lte: 100
+    }
+});
+
+//5. Display players whose club is Real Madrid
+db.football.find({ club: "Real Madrid" });
+
+//6. Display players whose country is not England
+db.football.find({
+    country: { $ne: "England" }
+});
+
+//7. Display players whose goal2022 is greater than or equal to 15
+db.football.find({
+    goal2022: { $gte: 15 }
+});
+
+//8. Find players whose name starts with M
+db.football.find({
+    name: /^M/
+});
+
+//9. Display players whose club is either Barcelona or Liverpool
+db.football.find({
+    club: { $in: ["Barcelona", "Liverpool"] }
+});
+
+//10. Find players whose goal2025 is not equal to 10
+db.football.find({
+    goal2025: { $ne: 10 }
+});
+
+
+
+//=====================================================
+// SECTION D : AGGREGATION PIPELINE
+//=====================================================
+
+//1. Display all players from England using $match
+db.football.aggregate([
+    { $match: { country: "England" } }
+]);
+
+//2. Calculate total goals scored by each country
+db.football.aggregate([
+    {
+        $group: {
+            _id: "$country",
+            totalGoals: { $sum: "$totalGoal" }
+        }
+    }
+]);
+
+//3. Find highest totalGoal scored in each country
+db.football.aggregate([
+    {
+        $group: {
+            _id: "$country",
+            highestGoal: { $max: "$totalGoal" }
+        }
+    }
+]);
+
+//4. Find lowest totalGoal in each country
+db.football.aggregate([
+    {
+        $group: {
+            _id: "$country",
+            lowestGoal: { $min: "$totalGoal" }
+        }
+    }
+]);
+
+//5. Calculate average totalGoal of each club
+db.football.aggregate([
+    {
+        $group: {
+            _id: "$club",
+            averageGoal: { $avg: "$totalGoal" }
+        }
+    }
+]);
+
+//6. Count number of players in each country
+db.football.aggregate([
+    {
+        $group: {
+            _id: "$country",
+            players: { $sum: 1 }
+        }
+    }
+]);
+
+//7. Display players sorted by totalGoal in descending order
+db.football.aggregate([
+    { $sort: { totalGoal: -1 } }
+]);
+
+//8. Display only name, country and totalGoal
+db.football.aggregate([
+    {
+        $project: {
+            _id: 0,
+            name: 1,
+            country: 1,
+            totalGoal: 1
+        }
+    }
+]);
+
+//9. Display top 5 goal scorers
+db.football.aggregate([
+    { $sort: { totalGoal: -1 } },
+    { $limit: 5 }
+]);
+
+//10. Find total goals scored by Real Madrid players
+db.football.aggregate([
+    { $match: { club: "Real Madrid" } },
+    {
+        $group: {
+            _id: "$club",
+            totalGoals: { $sum: "$totalGoal" }
+        }
+    }
+]);
+
+
+
+//=====================================================
+// SECTION E : SQL TO MONGODB MAPPING
+//=====================================================
+
+//SELECT * FROM football;
+db.football.find();
+
+//SELECT * FROM football WHERE country='Brazil';
+db.football.find({ country: "Brazil" });
+
+//UPDATE football SET goal2025=25 WHERE name='Pedri';
+db.football.updateOne(
+    { name: "Pedri" },
+    { $set: { goal2025: 25 } }
+);
+
+//DELETE FROM football WHERE club='Barcelona';
+db.football.deleteMany({ club: "Barcelona" });
+
+//SELECT country, AVG(totalGoal) FROM football GROUP BY country;
+db.football.aggregate([
+    {
+        $group: {
+            _id: "$country",
+            averageGoal: { $avg: "$totalGoal" }
+        }
+    }
+]);
+
+
+
+//=====================================================
+// SECTION F : AGGREGATION QUESTIONS
+//=====================================================
+
+//1. Find player having highest totalGoal
+db.football.aggregate([
+    { $sort: { totalGoal: -1 } },
+    { $limit: 1 }
+]);
+
+//2. Find Top 3 goal scorers
+db.football.aggregate([
+    { $sort: { totalGoal: -1 } },
+    { $limit: 3 }
+]);
+
+//3. Calculate total goals scored in 2025
+db.football.aggregate([
+    {
+        $group: {
+            _id: null,
+            total2025Goals: { $sum: "$goal2025" }
+        }
+    }
+]);
+
+//4. Find average goals scored in 2024 by each club
+db.football.aggregate([
+    {
+        $group: {
+            _id: "$club",
+            average2024Goal: { $avg: "$goal2024" }
+        }
+    }
+]);
+
+//5. Display countries whose average totalGoal is greater than 70
+db.football.aggregate([
+    {
+        $group: {
+            _id: "$country",
+            averageGoal: { $avg: "$totalGoal" }
+        }
+    },
+    {
+        $match: {
+            averageGoal: { $gt: 70 }
+        }
+    }
+]);
