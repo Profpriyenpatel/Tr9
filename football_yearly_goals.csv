@@ -1,0 +1,31 @@
+_id,name,state,club,country,goal2022,goal2023,goal2024,goal2025,totalGoal
+P001,Lionel Messi,Rosario,Inter Miami,Argentina,30,35,28,32,125
+P002,Cristiano Ronaldo,Madeira,Al Nassr,Portugal,32,31,30,29,122
+P003,Kylian Mbappe,Paris,Real Madrid,France,20,8,5,23,56
+P004,Erling Haaland,Leeds,Manchester City,Norway,8,12,12,4,36
+P005,Neymar Jr,Sao Paulo,Santos,Brazil,3,22,7,18,50
+P006,Harry Kane,London,Bayern Munich,England,13,6,5,2,26
+P007,Kevin De Bruyne,Ghent,Napoli,Belgium,6,12,21,19,58
+P008,Luka Modric,Zadar,Real Madrid,Croatia,0,22,11,22,55
+P009,Vinicius Jr,Rio de Janeiro,Real Madrid,Brazil,20,22,18,7,67
+P010,Jude Bellingham,Birmingham,Real Madrid,England,14,23,13,25,75
+P011,Mohamed Salah,Nagrig,Liverpool,Egypt,0,10,27,13,50
+P012,Robert Lewandowski,Warsaw,Barcelona,Poland,10,13,9,6,38
+P013,Pedri,Tenerife,Barcelona,Spain,10,8,7,12,37
+P014,Lamine Yamal,Barcelona,Barcelona,Spain,3,16,16,19,54
+P015,Bukayo Saka,London,Arsenal,England,8,6,28,14,56
+P016,Declan Rice,London,Arsenal,England,17,8,17,2,44
+P017,Bruno Fernandes,Porto,Manchester United,Portugal,17,14,25,19,75
+P018,Marcus Rashford,Manchester,Manchester United,England,11,23,11,22,67
+P019,Phil Foden,Stockport,Manchester City,England,2,6,26,7,41
+P020,Rodri,Madrid,Manchester City,Spain,9,7,12,3,31
+P021,Son Heung-min,Chuncheon,Tottenham,South Korea,12,13,19,20,64
+P022,Virgil van Dijk,Breda,Liverpool,Netherlands,11,10,16,11,48
+P023,Alisson Becker,Novo Hamburgo,Liverpool,Brazil,6,13,27,21,67
+P024,Thibaut Courtois,Bree,Real Madrid,Belgium,20,7,24,20,71
+P025,Gavi,Los Palacios,Barcelona,Spain,5,22,28,7,62
+P026,Joao Felix,Viseu,Chelsea,Portugal,5,19,17,8,49
+P027,Kai Havertz,Aachen,Arsenal,Germany,20,22,12,21,75
+P028,Jamal Musiala,Stuttgart,Bayern Munich,Germany,10,6,12,1,29
+P029,Federico Valverde,Montevideo,Real Madrid,Uruguay,10,17,13,2,42
+P030,Achraf Hakimi,Madrid,PSG,Morocco,6,23,27,10,66
