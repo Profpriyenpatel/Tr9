@@ -1,0 +1,65 @@
+React, Express, MongoDB Connectivity Solution
+
+1.  Backend (server.js)
+
+const express = require(“express”); const mongoose =
+require(“mongoose”); const cors = require(“cors”);
+
+const app = express();
+
+app.use(cors()); app.use(express.json());
+
+mongoose.connect(“mongodb://127.0.0.1:27017/reactdb”)
+.then(()=>console.log(“MongoDB Connected”))
+.catch(err=>console.log(err));
+
+const userSchema=new mongoose.Schema({
+username:{type:String,required:true,unique:true},
+password:{type:String,required:true,minlength:6} });
+
+const User=mongoose.model(“User”,userSchema);
+
+app.post(“/signup”,async(req,res)=>{ try{ const user=new User(req.body);
+await user.save(); res.json({message:“User signed up successfully.”});
+}catch(err){ res.status(400).json({message:err.message}); } });
+
+app.listen(5000,()=>console.log(“Server running”));
+
+2.  Signup.jsx
+
+import {useState} from “react”; import axios from “axios”;
+
+function Signup(){ const [username,setUsername]=useState(““); const
+[password,setPassword]=useState(”“);
+
+const handleSubmit=async(e)=>{ e.preventDefault(); try{ const res=await
+axios.post(“http://localhost:5000/signup”,{username,password});
+alert(res.data.message); }catch(err){ alert(err.response.data.message);
+} };
+
+return(
+setUsername(e.target.value)} placeholder=“Username”/>
+setPassword(e.target.value)} placeholder=“Password”/> Signup
+); }
+
+export default Signup;
+
+3.  App.jsx
+
+import Signup from “./Signup”;
+
+function App(){ return ; }
+
+export default App;
+
+4.  Install Packages
+
+Backend: npm install express mongoose cors
+
+Frontend: npm install axios
+
+5.  Run
+
+Backend: node server.js
+
+Frontend: npm run dev
